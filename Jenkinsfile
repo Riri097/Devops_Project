@@ -29,7 +29,8 @@ pipeline {
             steps {
                 dir('Frontend') {
                     
-                    bat 'npm install --include=dev'
+                    bat 'npm install 
+                    --include=dev'
                 }
             }
         }
@@ -38,7 +39,7 @@ pipeline {
             steps {
                 dir('Frontend') {
                     
-                    bat 'set NODE_ENV=production'
+                    bat 'npm run build'
                 }
             }
         }
