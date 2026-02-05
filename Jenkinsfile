@@ -27,7 +27,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                dir('frontend') {
+                dir('Frontend') {
                     
                     bat 'npm install --include=dev'
                 }
@@ -36,7 +36,7 @@ pipeline {
 
         stage('Build React App') {
             steps {
-                dir('frontend') {
+                dir('Frontend') {
                     
                     bat 'set NODE_ENV=production'
                 }
@@ -45,7 +45,7 @@ pipeline {
 
         stage('Verify Build Output') {
             steps {
-                dir('frontend') {
+                dir('Frontend') {
                     bat '''
                     if exist dist (
                         echo Build folder exists
