@@ -1,8 +1,13 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "frontend"
+        CONTAINER_NAME = "frontend-container"
+    }
+
     triggers {
-        pollSCM('H/5 * * * *')
+        pollSCM('* * * * *')
     }
 
     stages {
@@ -16,29 +21,25 @@ pipeline {
         stage('Verify Docker') {
             steps {
                 bat 'docker --version'
-                bat 'docker-compose --version'
             }
         }
 
-        stage('Build & Run with Docker Compose') {
+         stage('Stop Existing Containers') {
             steps {
-                bat '''
-                docker-compose down
-                docker-compose build
-                docker-compose up -d
-                '''
+                bat 'docker compose down || true'
             }
         }
 
-        stage('Verify Container') {
+
+     stage('Build Containers') {
             steps {
-                bat 'docker ps'
+                bat 'docker compose build'
             }
         }
 
-        stage('Success') {
+        stage('Run Containers') {
             steps {
-                echo 'Frontend deployed successfully using Docker Compose'
+                bat 'docker compose up -d'
             }
         }
     }
