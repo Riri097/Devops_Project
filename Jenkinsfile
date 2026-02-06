@@ -32,9 +32,7 @@ pipeline {
 
         stage('Verify Container') {
             steps {
-                bat '''
-                docker ps
-                '''
+                bat 'docker ps'
             }
         }
 
